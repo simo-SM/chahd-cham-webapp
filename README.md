@@ -1,5 +1,7 @@
 # Chahd Cham Food Ordering Web App
-
+---
+![image alt](https://github.com/simo-SM/chahd-cham-webapp/blob/b7934eef62fe24def199b8082c6ae1987238f39f/photoFOOD.png)
+---
 A modern, responsive web application for **Chahd Cham** restaurant. Customers can browse the menu, add items to the cart, and place orders directly via **WhatsApp**.
 
 ---
