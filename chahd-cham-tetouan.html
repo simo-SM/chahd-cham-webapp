@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Chahd Cham Tetouan - Authentic Syrian Cuisine</title>
+  <meta content="Experience the authentic taste of Syrian cuisine in Tetouan. From crispy Kibbeh to savory Shawarma, discover the flavors of Damascus at Chahd Cham." name="description"/>
+  
+  <!-- ============================================ -->
+  <!-- FONTS -->
+  <!-- ============================================ -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <!-- ============================================ -->
+  <!-- link main CSS -->
+  <!-- ============================================ -->
+   <link rel="stylesheet" href="./css/main.css">
+  <!-- ============================================ -->
+  <!-- TAILWIND CSS -->
+  <!-- ============================================ -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#a90a22",
+            "primary-dark": "#8a081b",
+            "background-light": "#f8f5f6",
+            "background-dark": "#221013",
+            "accent-gold": "#D4AF37",
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            "2xl": "1rem",
+            full: "9999px"
+          },
+          backgroundImage: {
+            "pattern-arabesque": "url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cpath d=\\'M54.627 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM22.485 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 22.485l.828.83-1.415 1.415-.828-.828-.828.828L-3.657 22.485l.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 54.627l.828.83-1.415 1.415-.828-.828-.828.828L-3.657 54.627l.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM54.627 60l.83-.828-1.415-1.415-.828.828-.828-.828-1.415 1.415.828.828-.828.828 1.415 1.415.828-.828.828.828 1.415-1.415-.828-.828zM22.485 60l.83-.828-1.415-1.415-.828.828-.828-.828-1.415 1.415.828.828-.828.828 1.415-1.415.828-.828.828.828 1.415-1.415-.828-.828z\\' fill=\\'%23a90a22\\' fill-opacity=\\'0.05\\' fill-rule=\\'evenodd\\'/%3E%3C/svg%3E')",
+          }
+        },
+      },
+    }
+  </script>
+  
+  <!-- ============================================ -->
+  <!-- CUSTOM STYLES -->
+  <!-- ============================================ -->
+  <style>
+    /* Utility Classes */
+    .text-shadow {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Hero Gradient Overlay */
+    .hero-gradient {
+      background: linear-gradient(
+        to top,
+        rgba(34, 16, 19, 0.9) 0%,
+        rgba(34, 16, 19, 0.4) 50%,
+        rgba(34, 16, 19, 0.6) 100%
+      );
+    }
+    
+    /* Dot Pattern for Specials Section */
+    .dot-pattern {
+      background-image: radial-gradient(#ffffff 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    /* Cart Sidebar Animation */
+    .cart-sidebar {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
+    
+    /* Cart Overlay */
+    .cart-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .cart-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Full Menu Modal */
+    .menu-modal {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .menu-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .menu-modal-content {
+      transform: scale(0.95);
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .menu-modal.open .menu-modal-content {
+      transform: scale(1);
+    }
+    
+    /* Quantity Button Animation */
+    .qty-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .qty-btn:active {
+      transform: scale(0.95);
+    }
+    
+    /* Cart Item Animation */
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .cart-item {
+      animation: slideIn 0.3s ease;
+    }
+    
+    /* Badge Pulse Animation */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+    
+    .cart-badge {
+      animation: pulse 0.3s ease;
+    }
+    
+    /* Menu Category Tab Active */
+    .menu-tab.active {
+      background-color: #a90a22;
+      color: white;
+    }
+    
+    /* Menu Item Card Hover */
+    .menu-item-card {
+      transition: all 0.3s ease;
+    }
+    
+    .menu-item-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(169, 10, 34, 0.15);
+    }
+    /* category Tabs */
+    #categoryTabs {
+      padding: 20px;
+      margin-bottom: 10px;
+      overflow-y: hidden;
+    }
+    .mobileMenu{
+      display: none;
+    }
+    .mobileMenu.active {
+      display: flex;
+    }
+    /* Mobile Menu Styles - Slide Down Animation */
+      .mobileMenu {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(246, 246, 246, 0.95);
+        backdrop-filter: blur(50px);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid #a90a22;
+        border-radius: 0 0 16px 16px;
+        padding: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        z-index: 40;
+
+        /* Animation properties */
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .mobileMenu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .mobileMenu a {
+        padding: 15px 20px;
+        color: #a90a22;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        margin-bottom: 5px;
+      }
+
+      .mobileMenu a:last-child {
+        margin-bottom: 0;
+      }
+
+      .mobileMenu a:hover {
+        background-color: #a90a22;
+        color: white;
+        transform: translateX(5px);
+      }
+
+      /* Animation keyframes for staggered effect */
+      @keyframes slideDownFade {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .mobileMenu.active a {
+        animation: slideDownFade 0.4s ease forwards;
+      }
+
+      .mobileMenu.active a:nth-child(1) { animation-delay: 0.05s; }
+      .mobileMenu.active a:nth-child(2) { animation-delay: 0.1s; }
+      .mobileMenu.active a:nth-child(3) { animation-delay: 0.15s; }
+      .mobileMenu.active a:nth-child(4) { animation-delay: 0.2s; }
+
+      @media screen and (min-width: 769px) {
+        .mobileMenu {
+          display: none !important;
+        }
+      }
+  </style>
+
+</head>
+
+<!-- ============================================ -->
+<!-- BODY -->
+<!-- ============================================ -->
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 antialiased selection:bg-primary selection:text-white">
+  
+  <!-- ============================================ -->
+  <!-- NAVIGATION -->
+  <!-- ============================================ -->
+  <nav class="fixed w-full z-50 transition-all duration-300 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-primary/10 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center gap-2">
+          <span class="material-icons-round text-primary text-4xl">restaurant_menu</span>
+          <div class="flex flex-col">
+            <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white leading-none">CHAHD CHAM</span>
+            <span class="text-xs text-primary font-semibold tracking-widest uppercase">Tetouan</span>
+          </div>
+        </div>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 items-center">
+          <a class="text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-medium transition-colors" href="#menu">Menu</a>
+          <a class="text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-medium transition-colors" href="#specials">Specials</a>
+          <a class="text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-medium transition-colors" href="#testimonials">Reviews</a>
+          <a class="text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-medium transition-colors" href="#contact">Contact</a>
+          
+          <!-- Cart Button -->
+          <button id="cartBtn" class="relative bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-primary/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+            <span class="material-icons-round">shopping_cart</span>
+            <span id="cartCount" class="hidden">0</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu - Full width slide down -->
+        <div id="mobileMenu" class="mobileMenu md:hidden">
+          <a href="#menu">Menu</a>
+          <a href="#specials">Specials</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center gap-4">
+          <!-- Mobile Cart Button -->
+          <button id="cartBtnMobile" class="relative text-primary">
+            <span class="material-icons-round text-3xl">shopping_cart</span>
+            <span id="cartCountMobile" class="hidden absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+          </button>
+         <button id="menuBtn" class="text-gray-700 dark:text-gray-200 hover:text-primary focus:outline-none">
+            <span id="menuIcon" class="material-icons-round text-3xl">menu</span>
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  </nav>
+  
+  <!-- ============================================ -->
+  <!-- CART SIDEBAR -->
+  <!-- ============================================ -->
+  <!-- Overlay -->
+  <div id="cartOverlay" class="cart-overlay fixed inset-0 bg-black/50 z-[60]"></div>
+  
+  <!-- Sidebar -->
+  <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white dark:bg-[#2a1418] z-[70] shadow-2xl flex flex-col">
+    
+    <!-- Cart Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+      <div class="flex items-center gap-3">
+        <span class="material-icons-round text-primary text-3xl">shopping_cart</span>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Your Order</h2>
+        <span id="sidebarCartCount" class="bg-primary text-white text-sm px-2 py-0.5 rounded-full">0</span>
+      </div>
+      <button id="closeCart" class="text-gray-500 hover:text-primary transition-colors">
+        <span class="material-icons-round text-3xl">close</span>
+      </button>
+    </div>
+    
+    <!-- Cart Items -->
+    <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4">
+      <!-- Empty State -->
+      <div id="emptyCart" class="text-center py-12">
+        <span class="material-icons-round text-6xl text-gray-300 dark:text-gray-600 mb-4">shopping_basket</span>
+        <p class="text-gray-500 dark:text-gray-400">Your cart is empty</p>
+        <p class="text-gray-400 dark:text-gray-500 text-sm mt-2">Add some delicious items!</p>
+      </div>
+    </div>
+    
+    <!-- Cart Footer -->
+    <div class="border-t border-gray-200 dark:border-gray-700 p-6 space-y-4 bg-gray-50 dark:bg-[#1a0f12]">
+      
+      <!-- Subtotal -->
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
+        <span id="cartSubtotal" class="font-bold text-gray-900 dark:text-white">0 MAD</span>
+      </div>
+      
+      <!-- Delivery Fee -->
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 dark:text-gray-400">Delivery</span>
+        <span class="text-green-600 font-medium">Free</span>
+      </div>
+      
+      <!-- Total -->
+      <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+        <span class="text-lg font-bold text-gray-900 dark:text-white">Total</span>
+        <span id="cartTotal" class="text-2xl font-bold text-primary">0 MAD</span>
+      </div>
+      
+      <!-- Send Order Button -->
+      <button id="sendOrderBtn" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-4 rounded-xl font-bold text-lg shadow-lg transition-all transform hover:scale-[1.02] flex items-center justify-center gap-3">
+        <span class="material-icons-round">chat</span>
+        Send Order via WhatsApp
+      </button>
+      
+      <!-- Continue Shopping -->
+      <button id="continueShopping" class="w-full py-3 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors font-medium">
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+  
+  <!-- ============================================ -->
+  <!-- FULL MENU MODAL - FIX HNA -->
+  <!-- ============================================ -->
+  <div id="menuModal" class="menu-modal fixed inset-0 bg-black/60 z-[80] flex items-center justify-center p-4">
+    <div class="menu-modal-content bg-white dark:bg-[#2a1418] w-full max-w-6xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col relative" style="isolation: isolate;">
+
+      <!-- Modal Header - z-30 bach ykoun fo9 tchii -->
+      <div class="relative z-30 flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-primary to-primary-dark shrink-0">
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-white text-3xl">restaurant_menu</span>
+          <h2 class="text-2xl font-bold text-white">Full Menu</h2>
+        </div>
+        <button id="closeMenuModal" class="text-white/80 hover:text-white transition-colors relative z-30">
+          <span class="material-icons-round text-3xl">close</span>
+        </button>
+      </div>
+
+      <!-- Category Tabs - z-20 -->
+      <div id="categoryTabs" class="relative z-20 flex overflow-x-auto gap-2 bg-gray-50 dark:bg-[#1a0f12] border-b border-gray-200 dark:border-gray-700 scrollbar-hide shrink-0">
+        <button onclick="filterMenu('all')" class="menu-tab active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="all">All</button>
+        <button onclick="filterMenu('salades')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="salades">Salades</button>
+        <button onclick="filterMenu('plats')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="plats">Plats</button>
+        <button onclick="filterMenu('tacos')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="tacos">Tacos</button>
+        <button onclick="filterMenu('pizzas')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="pizzas">Pizzas</button>
+        <button onclick="filterMenu('sandwiches')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="sandwiches">Sandwiches</button>
+        <button onclick="filterMenu('desserts')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="desserts">Desserts</button>
+        <button onclick="filterMenu('boissons')" class="menu-tab px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-all" data-category="boissons">Boissons</button>
+      </div>
+
+      <!-- Menu Items Grid - z-10 -->
+      <div id="fullMenuGrid" class="relative z-10 flex-1 overflow-y-auto p-6 min-h-0">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Menu items will be inserted here by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ============================================ -->
+  <!-- HERO SECTION -->
+  <!-- ============================================ -->
+  <header class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+    
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        alt="Table spread with authentic Syrian mezze including hummus and falafel" 
+        class="w-full h-full object-cover" 
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkeW9-FzcJLhjtgtaF1ynj6_upbTpPcTb1IV4E6mV0nklMAkczEUQ7zFYeUGok3OV935XSiqdim1LNUt8AXBs2snUK331tNcipFwf7djlyotwvCCWWmLQrpN2lNSptLBeOepFiGBBpPVhFFuzy2vDUMq3nnIYlds7AVZQ7SZ2BCmsDZdgsOaQJ2HdNxcWWZyx44PocI09MYI-NL3JT2vchwuOHiZjGR2maV6PkoAzU0O0k5bkSOcsfmV9fOcvvHLz2ySxEyXdXrLuj"
+      />
+      <div class="absolute inset-0 hero-gradient"></div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <div class="inline-block px-3 py-1 mb-6 border border-white/30 rounded-full bg-white/10 backdrop-blur-md">
+        <span class="text-white text-sm font-semibold tracking-wide uppercase">The Taste of Damascus</span>
+      </div>
+      
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight text-shadow">
+        Authentic Syrian Cuisine <br/> in <span class="text-primary italic">Tetouan</span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto font-light">
+        Experience the true taste of tradition with our handcrafted Kibbeh, savory Shawarma, and charcoal-grilled delights.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-primary/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2" href="#menu">
+          <span class="material-icons-round">restaurant</span> Order Now
+        </a>
+        <a class="bg-transparent hover:bg-white text-white hover:text-primary border-2 border-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2" href="#contact">
+          <span class="material-icons-round">event_seat</span> Reserve Table
+        </a>
+      </div>
+    </div>
+    
+  </header>
+  
+  <!-- ============================================ -->
+  <!-- MENU HIGHLIGHTS SECTION -->
+  <!-- ============================================ -->
+  <section id="menu" class="py-20 bg-background-light dark:bg-background-dark bg-pattern-arabesque relative" id="menu">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-primary font-bold tracking-wider uppercase mb-2">Our Menu</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Handcrafted Delights</h3>
+        <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+      </div>
+      
+      <!-- Menu Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Menu Item 1: Best Seller -->
+        <article class="bg-white dark:bg-[#2a1418] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100 dark:border-primary/10">
+          <div class="relative h-64 overflow-hidden">
+            <div class="absolute top-4 right-4 z-10 bg-accent-gold text-white text-xs font-bold px-3 py-1 rounded-full uppercase shadow-md flex items-center gap-1">
+              <span class="material-icons-round text-sm">star</span> Best Seller
+            </div>
+            <img 
+              alt="Crispy Syrian Kibbeh balls on a plate" 
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCArh-o_rUtNTKkrRWu0QehdkgKdJ597Yao3sjiZhwuoE8M2oj_L6mE6_LSgiJnIj0IAaTMbz67pLF4wBTDb0B8j2M1nY3oDfKRESbSP7hT3H5qI-25jYeZ4YokRVQ7NAE8vKdUbaEtrcF_dAgXeMSjkK5_JiTRCBtaOkr3AbjY5SxAReKarnLsYsRAdogp28NVxunufrPFN0gGDq8e8NAUEDd4jYgitA0InGBjBXj4AyuGa8Bir_pVPtj00SsJlo-2D99dG-bOAyhw"
+            />
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Kibbeh Bil Sanieh</h4>
+              <span class="text-primary font-bold text-lg">45 MAD</span>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+              A traditional baked dish made with layers of fine bulgur wheat and spiced ground meat, served with yogurt sauce.
+            </p>
+            <button onclick="addToCart('Kibbeh Bil Sanieh', 45, 'https://lh3.googleusercontent.com/aida-public/AB6AXuCArh-o_rUtNTKkrRWu0QehdkgKdJ597Yao3sjiZhwuoE8M2oj_L6mE6_LSgiJnIj0IAaTMbz67pLF4wBTDb0B8j2M1nY3oDfKRESbSP7hT3H5qI-25jYeZ4YokRVQ7NAE8vKdUbaEtrcF_dAgXeMSjkK5_JiTRCBtaOkr3AbjY5SxAReKarnLsYsRAdogp28NVxunufrPFN0gGDq8e8NAUEDd4jYgitA0InGBjBXj4AyuGa8Bir_pVPtj00SsJlo-2D99dG-bOAyhw')" class="w-full py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors font-medium flex items-center justify-center gap-2">
+              <span class="material-icons-round text-sm">add_shopping_cart</span> Add to Order
+            </button>
+          </div>
+        </article>
+        
+        <!-- Menu Item 2 -->
+        <article class="bg-white dark:bg-[#2a1418] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100 dark:border-primary/10">
+          <div class="relative h-64 overflow-hidden">
+            <img 
+              alt="Fresh chicken shawarma wrap with garlic sauce" 
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOdyEqAuZjVUSWQ4oHB6v0Ru-L8SRm_IDXiSUezbaM778yJ9j7_uGrvdd4bOoimVlzDCHj00MMpnv_T_yx6nk72E51HfUb9O3fmPCCsDN39LyElTzKxEIH-lJ-Z2aoPOcw6e-9Pe7ZZIKSi_Jd3tkn7aE0-UZxZiVvnJgwgH0gpqwqRKb7rJpe845mzfNkq3obAJET4nFHVEfoaZ1xOwMSFQuEFRcG8JJZQF_ky47ZpF_JhgqolKhDi6ULD0Mtn3M1uHc_xCFuFiWX"
+            />
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Shawarma Arabi</h4>
+              <span class="text-primary font-bold text-lg">35 MAD</span>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+              Marinated chicken or beef roasted on a vertical spit, wrapped in saj bread, toasted and cut into bite-sized pieces.
+            </p>
+            <button onclick="addToCart('Shawarma Arabi', 35, 'https://lh3.googleusercontent.com/aida-public/AB6AXuCOdyEqAuZjVUSWQ4oHB6v0Ru-L8SRm_IDXiSUezbaM778yJ9j7_uGrvdd4bOoimVlzDCHj00MMpnv_T_yx6nk72E51HfUb9O3fmPCCsDN39LyElTzKxEIH-lJ-Z2aoPOcw6e-9Pe7ZZIKSi_Jd3tkn7aE0-UZxZiVvnJgwgH0gpqwqRKb7rJpe845mzfNkq3obAJET4nFHVEfoaZ1xOwMSFQuEFRcG8JJZQF_ky47ZpF_JhgqolKhDi6ULD0Mtn3M1uHc_xCFuFiWX')" class="w-full py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors font-medium flex items-center justify-center gap-2">
+              <span class="material-icons-round text-sm">add_shopping_cart</span> Add to Order
+            </button>
+          </div>
+        </article>
+        
+        <!-- Menu Item 3 -->
+        <article class="bg-white dark:bg-[#2a1418] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100 dark:border-primary/10">
+          <div class="relative h-64 overflow-hidden">
+            <div class="absolute top-4 right-4 z-10 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase shadow-md">
+              Vegetarian
+            </div>
+            <img 
+              alt="Bowl of colorful Fattoush salad with pomegranate seeds" 
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe975j_j8C0y8YjP7goy41dA6LFP6kVJ-nFXy_0cMkgZ8eDAfa1raVErva7maSh7a5ZhoRQOt8u1uKRVftzEJS2Sc3q3oD3m8_7sbYQF2n1LNVVZWSAFqKVqxEYsqMJUqUaPXtwiTnfbcxyul7PtgBE2qA2n2177aI-nJYycMGY2nojExdpndscQyO0j7DATazaFOVGfWaPBwdU6W4jv7XuH0-iKused70MnKb2cQddxvIlLIO_eVPFsftElHccKaYzflite-kqwGd"
+            />
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Fattoush Royal</h4>
+              <span class="text-primary font-bold text-lg">30 MAD</span>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+              A fresh garden salad with toasted pita chips, sumac, pomegranate molasses dressing, and olive oil.
+            </p>
+            <button onclick='addToCart("Fattoush Royal", 30, "https://lh3.googleusercontent.com/aida-public/AB6AXuAe975j_j8C0y8YjP7goy41dA6LFP6kVJ-nFXy_0cMkgZ8eDAfa1raVErva7maSh7a5ZhoRQOt8u1uKRVftzEJS2Sc3q3oD3m8_7sbYQF2n1LNVVZWSAFqKVqxEYsqMJUqUaPXtwiTnfbcxyul7PtgBE2qA2n2177aI-nJYycMGY2nojExdpndscQyO0j7DATazaFOVGfWaPBwdU6W4jv7XuH0-iKused70MnKb2cQddxvIlLIO_eVPFsftElHccKaYzflite-kqwGd")' class="w-full py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors font-medium flex items-center justify-center gap-2">
+              <span class="material-icons-round text-sm">add_shopping_cart</span> Add to Order
+            </button>
+          </div>
+        </article>
+        
+      </div>
+      
+      <!-- View Full Menu Button -->
+      <div class="mt-12 text-center">
+        <button onclick="openFullMenu()" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-primary/30 transition-all transform hover:-translate-y-1">
+          <span class="material-icons-round">menu_book</span>
+          View Full Menu
+        </button>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- ============================================ -->
+  <!-- SPECIALS SECTION -->
+  <!-- ============================================ -->
+  <section id="specials" class="py-20 bg-primary dark:bg-primary-dark text-white relative overflow-hidden">
+    
+    <!-- Dot Pattern Overlay -->
+    <div class="absolute inset-0 opacity-10 dot-pattern"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+        
+        <!-- Specials Content -->
+        <div class="md:w-1/2 space-y-6">
+          <div class="inline-block px-3 py-1 bg-white/20 rounded-full backdrop-blur-sm border border-white/20">
+            <span class="text-accent-gold font-bold uppercase text-sm tracking-wider">Limited Time Offers</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold leading-tight">Family Feast Combo</h2>
+          <p class="text-lg text-white/90 font-light">
+            Gather your loved ones for a feast! Includes 1kg Mixed Grill, Large Hummus, Baba Ganoush, 6 Kibbeh pieces, and Family Size Rice.
+          </p>
+          <div class="flex items-center gap-4">
+            <span class="text-4xl font-bold text-accent-gold">299 MAD</span>
+            <span class="text-xl text-white/60 line-through">380 MAD</span>
+          </div>
+          <button onclick="addToCart('Family Feast Combo', 299, 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcbTK6FeIdvM_A8ToOZMZWETQ9IcttVIhn6u-Rsu75QmPTGuupROJcn86O4pWyBXYJVAIvSjXhW71yMEb23lta2Q5ddIy-zZk92YLLWpDeOW46Ke5c2AGNfItNzS-gNXkh2F6aDobu5ngtZPgMOol8ImfoVlz96kRyIfYEMP_cjowkFlyBlm50T6oLQhfBpFGVRZ6xgjp1ae-OQNpicO9cOzEL5Mf8sb59fUNStFlZy8yLuzjyaII5YU2aQdSk_OCIzbvhME5bw20Y')" class="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-xl font-bold shadow-lg transition-transform transform hover:scale-105 flex items-center gap-2">
+            <span class="material-icons-round">add_shopping_cart</span> Claim Deal
+          </button>
+        </div>
+        
+        <!-- Specials Image -->
+        <div class="md:w-1/2 relative">
+          <div class="absolute -inset-4 bg-accent-gold/20 rounded-full blur-2xl"></div>
+          <img 
+            alt="Large platter of mixed grill meat skewers and vegetables" 
+            class="relative w-full rounded-xl shadow-2xl border-4 border-white/10 rotate-2 hover:rotate-0 transition-transform duration-500" 
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcbTK6FeIdvM_A8ToOZMZWETQ9IcttVIhn6u-Rsu75QmPTGuupROJcn86O4pWyBXYJVAIvSjXhW71yMEb23lta2Q5ddIy-zZk92YLLWpDeOW46Ke5c2AGNfItNzS-gNXkh2F6aDobu5ngtZPgMOol8ImfoVlz96kRyIfYEMP_cjowkFlyBlm50T6oLQhfBpFGVRZ6xgjp1ae-OQNpicO9cOzEL5Mf8sb59fUNStFlZy8yLuzjyaII5YU2aQdSk_OCIzbvhME5bw20Y"
+          />
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============================================ -->
+  <!-- TESTIMONIALS SECTION -->
+  <!-- ============================================ -->
+  <section class="py-20 bg-background-light dark:bg-background-dark" id="testimonials">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-primary font-bold tracking-wider uppercase mb-2">Testimonials</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">What Our Guests Say</h3>
+      </div>
+      
+      <!-- Testimonials Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <article class="bg-white dark:bg-[#2a1418] p-8 rounded-xl shadow-lg border-t-4 border-primary relative">
+          <span class="material-icons-round text-6xl text-primary/10 absolute top-4 right-4">format_quote</span>
+          <div class="flex text-accent-gold mb-4">
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 italic mb-6">
+            "The best Syrian food I've had in Morocco! The hummus is incredibly smooth and the kebabs are juicy. Highly recommend the Shawarma Arabi."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
+              <img alt="Ahmed Benali portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS4FqjrHXZPgykEioNKYww9mBorg7bP-_QgRjDsY1bF5CQiwMR3ku2XLY3nunXYE020wlr1wfgvi_B69pAQ_qdENfzWTyMrfaDb1U3Iya6fz1LwtQJRGO7kwpi_zqtZ1qDWCn1HllixsYNJmRfXxpYPTgm5rxgZN4trVQM6-tF_BBNGP_BxESdupIv4-XEiRXGd1AxHDxJCUY1YvAAVS0TaNpM7-psijWGPomncXjKKuZFNAirBGpuee8VujBrHpINozmcmEiHuQgC"/>
+            </div>
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Ahmed Benali</p>
+              <p class="text-xs text-gray-500">Local Guide</p>
+            </div>
+          </div>
+        </article>
+        
+        <!-- Review 2 -->
+        <article class="bg-white dark:bg-[#2a1418] p-8 rounded-xl shadow-lg border-t-4 border-primary relative">
+          <span class="material-icons-round text-6xl text-primary/10 absolute top-4 right-4">format_quote</span>
+          <div class="flex text-accent-gold mb-4">
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 italic mb-6">
+            "Beautiful atmosphere and very friendly staff. It feels like a little piece of Damascus in Tetouan. The prices are very reasonable for the quality."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
+              <img alt="Sarah Lazaar portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV9Q1pKg7xvWtkLFjjS75fUJAaJHwszfUFoWRq2KUUR2bR3SD7vzLLMYa7nZ8-B_-uEW2bRa8LdlEkBKW6ZdvkyDEWj8tAOhkkHPKMCnG6RZ17UvboCNwttZiyOn-Ey2DDdWWT7xwDYCkRbeTkMB6pc8DaN0vyoug2FBGGLohz7RgPVZtmq3OIThwzvg8xUpPGuCOpw8QQ1lHjR8s3sm-083ulqBm1kOv2MvmbeiLNlOErc1DzPFCzFvb2bea7PsNO53pBVbyDbD2J"/>
+            </div>
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Sarah Lazaar</p>
+              <p class="text-xs text-gray-500">Food Blogger</p>
+            </div>
+          </div>
+        </article>
+        
+        <!-- Review 3 -->
+        <article class="bg-white dark:bg-[#2a1418] p-8 rounded-xl shadow-lg border-t-4 border-primary relative">
+          <span class="material-icons-round text-6xl text-primary/10 absolute top-4 right-4">format_quote</span>
+          <div class="flex text-accent-gold mb-4">
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star</span>
+            <span class="material-icons-round">star_half</span>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 italic mb-6">
+            "Order arrived hot and fresh. The packaging was excellent. Definitely my go-to spot for family dinner delivery on weekends."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
+              <img alt="Karim Tazi portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmL_nX9WkoFR-gnD8q5N6V3Dqfbyot1uhKOu5SRoPsCbh5MGnAojZp8tczbMu_a7hWHlaf7kMuvZHsKs9HXHM5KcKTh9yoxLwopXpOhNwE03my-fC5CMLqmlApteSCp6oGQvbtPilVUGaKcB4Hw6eQKwOFNywvn9fcyHxnqLJ_L1wsMTurw1A936JglI1EUpQlGMbof4V4--zh0o_ijEYsjqgYQWS4xjWR4GIbp0gRFZadMSIAAtyMEbetbeT146Bs5jvJe08TS827"/>
+            </div>
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Karim Tazi</p>
+              <p class="text-xs text-gray-500">Verified Customer</p>
+            </div>
+          </div>
+        </article>
+        
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============================================ -->
+  <!-- LOCATION & CONTACT SECTION -->
+  <!-- ============================================ -->
+  <section class="bg-white dark:bg-[#2a1418]" id="contact">
+    <div class="flex flex-col lg:flex-row h-auto lg:h-[500px]">
+      
+      <!-- Contact Info Side -->
+      <div class="lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center bg-background-light dark:bg-background-dark">
+        <h2 class="text-3xl font-bold text-primary mb-6">Visit Us</h2>
+        
+        <div class="space-y-6">
+          
+          <!-- Location -->
+          <div class="flex items-start gap-4">
+            <div class="bg-primary/10 p-3 rounded-full text-primary">
+              <span class="material-icons-round">location_on</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 dark:text-white">Location</h4>
+              <p class="text-gray-600 dark:text-gray-400">Ave. Hassan II, Centre Ville<br/>Tetouan, Morocco, 93000</p>
+            </div>
+          </div>
+          
+          <!-- Opening Hours -->
+          <div class="flex items-start gap-4">
+            <div class="bg-primary/10 p-3 rounded-full text-primary">
+              <span class="material-icons-round">schedule</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 dark:text-white">Opening Hours</h4>
+              <p class="text-gray-600 dark:text-gray-400">Mon - Sun: 11:00 AM - 11:00 PM</p>
+            </div>
+          </div>
+          
+          <!-- Contact -->
+          <div class="flex items-start gap-4">
+            <div class="bg-primary/10 p-3 rounded-full text-primary">
+              <span class="material-icons-round">phone</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 dark:text-white">Contact</h4>
+              <p class="text-gray-600 dark:text-gray-400">+212 5XX XX XX XX</p>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- WhatsApp Button -->
+        <div id="WhatsAppbb" class="btnwhat mt-10">
+          <a class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white px-6 py-3 rounded-lg font-bold shadow-md transition-colors w-full sm:w-auto justify-center" >
+            <span class="material-icons-round">chat</span> Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+      
+      <!-- Map Side -->
+      <div class="lg:w-1/2 h-80 lg:h-full relative rounded-xl overflow-hidden shadow-lg">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2935.0098029141495!2d-5.274527024752288!3d35.62054193330634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0b45e90b8fc4f7%3A0xff4d6f62d1f42134!2sRestaurant%20Chahd%20Cham!5e1!3m2!1sen!2sma!4v1771437031590!5m2!1sen!2sma"
+          class="w-full h-full"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="bg-white p-4 rounded-full shadow-xl animate-bounce">
+            <span class="material-icons-round text-primary text-4xl">place</span>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+    </div>
+  </section>
+  
+  <!-- ============================================ -->
+  <!-- FINAL CTA SECTION -->
+  <!-- ============================================ -->
+  <section class="relative py-24 flex items-center justify-center">
+    
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        alt="Warm and inviting restaurant interior with soft lighting" 
+        class="w-full h-full object-cover" 
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4CGbtuj6NacBRqgbFRl4hvzF2jD726ZMKpB-EjY9s08fMFS_0g_FsxRi3e-nDMpvjOpUnmvg79D2PiYOaN9-bgur3qOsewDHNHjKS6MN2h-V35bVC__nFRj85uqSdnj1N77L0ESRFHBJHDr-jtfpGR6qt5ckPsREWdFERy93hunRRP4__LZdw8Nlob08DUw7jc378g6nLzZofWL_gaVD51uIqCiZKwT7TkqHLaSb_SmzkNI29sclQFVqPcj4Rq0MpJEph00Gd_0Lw"
+      />
+      <div class="absolute inset-0 bg-primary/90 mix-blend-multiply"></div>
+    </div>
+    
+    <!-- CTA Content -->
+    <div class="relative z-10 text-center px-4">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Experience Damascus?</h2>
+      <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">Book your table now and let us take you on a culinary journey you won't forget.</p>
+      <a class="inline-block bg-white text-primary hover:bg-gray-100 px-10 py-4 rounded-full font-bold text-xl shadow-xl transition-transform transform hover:-translate-y-1" href="#">
+        Reserve Your Table Today!
+      </a>
+    </div>
+    
+  </section>
+  
+  <!-- ============================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================ -->
+  <footer class="bg-background-dark text-white pt-16 pb-8 border-t border-primary/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        
+        <!-- Brand Column -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="material-icons-round text-primary text-3xl">restaurant_menu</span>
+            <span class="font-bold text-xl tracking-tight">CHAHD CHAM</span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            Authentic Syrian cuisine bringing the rich flavors and hospitality of the Levant to the heart of Tetouan.
+          </p>
+          <div class="flex gap-4">
+            <a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors" href="#">
+              <span class="material-icons-round text-lg">facebook</span>
+            </a>
+            <a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors" href="#">
+              <span class="material-icons-round text-lg">camera_alt</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-bold mb-6 text-primary">Quick Links</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li><a class="hover:text-white transition-colors" href="#">Home</a></li>
+            <li><a class="hover:text-white transition-colors" href="#menu">Menu</a></li>
+            <li><a class="hover:text-white transition-colors" href="#specials">Special Offers</a></li>
+            <li><a class="hover:text-white transition-colors" href="#testimonials">Reviews</a></li>
+          </ul>
+        </div>
+        
+        <!-- Support -->
+        <div>
+          <h4 class="text-lg font-bold mb-6 text-primary">Support</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li><a class="hover:text-white transition-colors" href="#">Contact Us</a></li>
+            <li><a class="hover:text-white transition-colors" href="#">FAQ</a></li>
+            <li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+            <li><a class="hover:text-white transition-colors" href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <!-- Newsletter -->
+        <div>
+          <h4 class="text-lg font-bold mb-6 text-primary">Stay Updated</h4>
+          <p class="text-gray-400 text-sm mb-4">Subscribe to get the latest offers and menu updates.</p>
+          <form class="flex flex-col gap-3">
+            <input 
+              class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
+              placeholder="Your Email" 
+              type="email"
+            />
+            <button class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-bold transition-colors" type="submit">Subscribe</button>
+          </form>
+        </div>
+        
+      </div>
+      
+      <!-- Copyright -->
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-500 text-sm">© 2023 Chahd Cham Tetouan. All rights reserved.</p>
+        <p class="text-gray-600 text-xs flex items-center gap-1">
+          Made with <span class="material-icons-round text-primary text-xs">favorite</span> in Morocco
+        </p>
+      </div>
+      
+    </div>
+  </footer>
+  
+  <!-- ============================================ -->
+  <!-- STICKY WHATSAPP FAB -->
+  <!-- ============================================ -->
+  <a class="whtsappBTN fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#20bd5a] transition-transform hover:scale-110 flex items-center justify-center group" href="#">
+    <span class="material-icons-round text-3xl">chat</span>
+    <span class="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 font-bold whitespace-nowrap">Order via WhatsApp</span>
+  </a>
+  
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================================ -->
+  <script src="./js/app.js"></script>
+  <script src="./js/animations.js"></script>
+  
+</body>
+</html>
